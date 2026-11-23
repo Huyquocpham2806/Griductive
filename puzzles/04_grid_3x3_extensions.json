@@ -1,0 +1,208 @@
+{
+  "puzzle_id": "04_grid_3x3_extensions",
+  "title": "Odd Company",
+  "difficulty": "Medium",
+  "num_rows": 3,
+  "num_cols": 3,
+  "description": "3 × 3 deduction case with 2 initial witness cards.",
+  "cells": [
+    {
+      "cell_id": "A1",
+      "row": 1,
+      "col": 1,
+      "name": "Abel",
+      "profession": "Astronaut",
+      "true_status": "INNOCENT",
+      "initially_revealed": true,
+      "clue": {
+        "clue_id": "clue_A1",
+        "owner_cell": "A1",
+        "clue_type": "PARITY",
+        "params": {
+          "parity": "EVEN",
+          "region": {
+            "region_type": "CELLS",
+            "target": [
+              "C1",
+              "A3"
+            ]
+          }
+        },
+        "text": "An even number in {C1, A3} are criminals."
+      }
+    },
+    {
+      "cell_id": "B1",
+      "row": 1,
+      "col": 2,
+      "name": "Bea",
+      "profession": "Cook",
+      "true_status": "CRIMINAL",
+      "initially_revealed": false,
+      "clue": {
+        "clue_id": "clue_B1",
+        "owner_cell": "B1",
+        "clue_type": "FACT",
+        "params": {
+          "target": "A1",
+          "status": "INNOCENT"
+        },
+        "text": "A1 is innocent."
+      }
+    },
+    {
+      "cell_id": "C1",
+      "row": 1,
+      "col": 3,
+      "name": "Clara",
+      "profession": "Guard",
+      "true_status": "CRIMINAL",
+      "initially_revealed": false,
+      "clue": {
+        "clue_id": "clue_C1",
+        "owner_cell": "C1",
+        "clue_type": "SAME",
+        "params": {
+          "target1": "A1",
+          "target2": "C3"
+        },
+        "text": "A1 and C3 have the same status."
+      }
+    },
+    {
+      "cell_id": "A2",
+      "row": 2,
+      "col": 1,
+      "name": "Derek",
+      "profession": "Cook",
+      "true_status": "CRIMINAL",
+      "initially_revealed": false,
+      "clue": {
+        "clue_id": "clue_A2",
+        "owner_cell": "A2",
+        "clue_type": "FACT",
+        "params": {
+          "target": "C2",
+          "status": "INNOCENT"
+        },
+        "text": "C2 is innocent."
+      }
+    },
+    {
+      "cell_id": "B2",
+      "row": 2,
+      "col": 2,
+      "name": "Eliza",
+      "profession": "Detective",
+      "true_status": "CRIMINAL",
+      "initially_revealed": false,
+      "clue": {
+        "clue_id": "clue_B2",
+        "owner_cell": "B2",
+        "clue_type": "SAME",
+        "params": {
+          "target1": "B3",
+          "target2": "A2"
+        },
+        "text": "B3 and A2 have the same status."
+      }
+    },
+    {
+      "cell_id": "C2",
+      "row": 2,
+      "col": 3,
+      "name": "Franz",
+      "profession": "Detective",
+      "true_status": "INNOCENT",
+      "initially_revealed": true,
+      "clue": {
+        "clue_id": "clue_C2",
+        "owner_cell": "C2",
+        "clue_type": "COMPARE_REGIONS",
+        "params": {
+          "op": ">",
+          "region1": {
+            "region_type": "CELLS",
+            "target": [
+              "C1",
+              "A3"
+            ]
+          },
+          "region2": {
+            "region_type": "CELLS",
+            "target": [
+              "A1"
+            ]
+          }
+        },
+        "text": "More criminals in {C1, A3} than in {A1}."
+      }
+    },
+    {
+      "cell_id": "A3",
+      "row": 3,
+      "col": 1,
+      "name": "Grant",
+      "profession": "Clerk",
+      "true_status": "CRIMINAL",
+      "initially_revealed": false,
+      "clue": {
+        "clue_id": "clue_A3",
+        "owner_cell": "A3",
+        "clue_type": "PARITY",
+        "params": {
+          "parity": "EVEN",
+          "region": {
+            "region_type": "ROW",
+            "target": 3
+          }
+        },
+        "text": "Criminal count in row 3 is even."
+      }
+    },
+    {
+      "cell_id": "B3",
+      "row": 3,
+      "col": 2,
+      "name": "Hannah",
+      "profession": "Guard",
+      "true_status": "CRIMINAL",
+      "initially_revealed": false,
+      "clue": {
+        "clue_id": "clue_B3",
+        "owner_cell": "B3",
+        "clue_type": "AT_LEAST",
+        "params": {
+          "k": 3,
+          "region": {
+            "region_type": "COL",
+            "target": "B"
+          }
+        },
+        "text": "At least 3 criminals in col B."
+      }
+    },
+    {
+      "cell_id": "C3",
+      "row": 3,
+      "col": 3,
+      "name": "Ivy",
+      "profession": "Clerk",
+      "true_status": "INNOCENT",
+      "initially_revealed": false,
+      "clue": {
+        "clue_id": "clue_C3",
+        "owner_cell": "C3",
+        "clue_type": "EXACTLY",
+        "params": {
+          "k": 2,
+          "region": {
+            "region_type": "NEIGHBORS",
+            "target": "C3"
+          }
+        },
+        "text": "Exactly 2 criminals in neighbors of C3."
+      }
+    }
+  ]
+}

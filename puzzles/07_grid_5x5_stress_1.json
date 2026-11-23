@@ -1,0 +1,559 @@
+{
+  "puzzle_id": "07_grid_5x5_stress_1",
+  "title": "The Night Shift",
+  "difficulty": "Stress",
+  "num_rows": 5,
+  "num_cols": 5,
+  "description": "5 × 5 deduction case with 1 initial witness cards.",
+  "cells": [
+    {
+      "cell_id": "A1",
+      "row": 1,
+      "col": 1,
+      "name": "Abel",
+      "profession": "Astronaut",
+      "true_status": "INNOCENT",
+      "initially_revealed": false,
+      "clue": {
+        "clue_id": "clue_A1",
+        "owner_cell": "A1",
+        "clue_type": "EXACTLY",
+        "params": {
+          "k": 1,
+          "region": {
+            "region_type": "CELLS",
+            "target": [
+              "D3",
+              "D4"
+            ]
+          }
+        },
+        "text": "Exactly 1 criminals in {D3, D4}."
+      }
+    },
+    {
+      "cell_id": "B1",
+      "row": 1,
+      "col": 2,
+      "name": "Bea",
+      "profession": "Cook",
+      "true_status": "CRIMINAL",
+      "initially_revealed": false,
+      "clue": {
+        "clue_id": "clue_B1",
+        "owner_cell": "B1",
+        "clue_type": "EXACTLY",
+        "params": {
+          "k": 5,
+          "region": {
+            "region_type": "NEIGHBORS",
+            "target": "C1"
+          }
+        },
+        "text": "Exactly 5 criminals in neighbors of C1."
+      }
+    },
+    {
+      "cell_id": "C1",
+      "row": 1,
+      "col": 3,
+      "name": "Clara",
+      "profession": "Guard",
+      "true_status": "CRIMINAL",
+      "initially_revealed": false,
+      "clue": {
+        "clue_id": "clue_C1",
+        "owner_cell": "C1",
+        "clue_type": "AT_LEAST",
+        "params": {
+          "k": 2,
+          "region": {
+            "region_type": "COMMON_NEIGHBORS",
+            "target": [
+              "C2",
+              "B1"
+            ]
+          }
+        },
+        "text": "At least 2 criminals in common neighbors of C2 and B1."
+      }
+    },
+    {
+      "cell_id": "D1",
+      "row": 1,
+      "col": 4,
+      "name": "Derek",
+      "profession": "Cook",
+      "true_status": "CRIMINAL",
+      "initially_revealed": false,
+      "clue": {
+        "clue_id": "clue_D1",
+        "owner_cell": "D1",
+        "clue_type": "EXACTLY",
+        "params": {
+          "k": 4,
+          "region": {
+            "region_type": "ROW",
+            "target": 1
+          }
+        },
+        "text": "Exactly 4 criminals in row 1."
+      }
+    },
+    {
+      "cell_id": "E1",
+      "row": 1,
+      "col": 5,
+      "name": "Eliza",
+      "profession": "Detective",
+      "true_status": "CRIMINAL",
+      "initially_revealed": false,
+      "clue": {
+        "clue_id": "clue_E1",
+        "owner_cell": "E1",
+        "clue_type": "EXACTLY",
+        "params": {
+          "k": 2,
+          "region": {
+            "region_type": "CELLS",
+            "target": [
+              "A4",
+              "D4"
+            ]
+          }
+        },
+        "text": "Exactly 2 criminals in {A4, D4}."
+      }
+    },
+    {
+      "cell_id": "A2",
+      "row": 2,
+      "col": 1,
+      "name": "Franz",
+      "profession": "Detective",
+      "true_status": "CRIMINAL",
+      "initially_revealed": false,
+      "clue": {
+        "clue_id": "clue_A2",
+        "owner_cell": "A2",
+        "clue_type": "DIFFERENT",
+        "params": {
+          "target1": "A4",
+          "target2": "C5"
+        },
+        "text": "A4 and C5 have different status."
+      }
+    },
+    {
+      "cell_id": "B2",
+      "row": 2,
+      "col": 2,
+      "name": "Grant",
+      "profession": "Clerk",
+      "true_status": "CRIMINAL",
+      "initially_revealed": false,
+      "clue": {
+        "clue_id": "clue_B2",
+        "owner_cell": "B2",
+        "clue_type": "SAME",
+        "params": {
+          "target1": "D5",
+          "target2": "E2"
+        },
+        "text": "D5 and E2 have the same status."
+      }
+    },
+    {
+      "cell_id": "C2",
+      "row": 2,
+      "col": 3,
+      "name": "Hannah",
+      "profession": "Guard",
+      "true_status": "CRIMINAL",
+      "initially_revealed": false,
+      "clue": {
+        "clue_id": "clue_C2",
+        "owner_cell": "C2",
+        "clue_type": "AT_LEAST",
+        "params": {
+          "k": 4,
+          "region": {
+            "region_type": "NEIGHBORS",
+            "target": "B1"
+          }
+        },
+        "text": "At least 4 criminals in neighbors of B1."
+      }
+    },
+    {
+      "cell_id": "D2",
+      "row": 2,
+      "col": 4,
+      "name": "Ivy",
+      "profession": "Clerk",
+      "true_status": "CRIMINAL",
+      "initially_revealed": false,
+      "clue": {
+        "clue_id": "clue_D2",
+        "owner_cell": "D2",
+        "clue_type": "SAME",
+        "params": {
+          "target1": "D5",
+          "target2": "D1"
+        },
+        "text": "D5 and D1 have the same status."
+      }
+    },
+    {
+      "cell_id": "E2",
+      "row": 2,
+      "col": 5,
+      "name": "Jonas",
+      "profession": "Farmer",
+      "true_status": "CRIMINAL",
+      "initially_revealed": false,
+      "clue": {
+        "clue_id": "clue_E2",
+        "owner_cell": "E2",
+        "clue_type": "EXACTLY",
+        "params": {
+          "k": 3,
+          "region": {
+            "region_type": "CELLS",
+            "target": [
+              "A1",
+              "B2",
+              "E2",
+              "E4"
+            ]
+          }
+        },
+        "text": "Exactly 3 criminals in {A1, B2, E2, E4}."
+      }
+    },
+    {
+      "cell_id": "A3",
+      "row": 3,
+      "col": 1,
+      "name": "Karl",
+      "profession": "Painter",
+      "true_status": "INNOCENT",
+      "initially_revealed": false,
+      "clue": {
+        "clue_id": "clue_A3",
+        "owner_cell": "A3",
+        "clue_type": "AT_LEAST",
+        "params": {
+          "k": 5,
+          "region": {
+            "region_type": "NEIGHBORS",
+            "target": "D4"
+          }
+        },
+        "text": "At least 5 criminals in neighbors of D4."
+      }
+    },
+    {
+      "cell_id": "B3",
+      "row": 3,
+      "col": 2,
+      "name": "Leo",
+      "profession": "Farmer",
+      "true_status": "INNOCENT",
+      "initially_revealed": false,
+      "clue": {
+        "clue_id": "clue_B3",
+        "owner_cell": "B3",
+        "clue_type": "SAME",
+        "params": {
+          "target1": "C3",
+          "target2": "C4"
+        },
+        "text": "C3 and C4 have the same status."
+      }
+    },
+    {
+      "cell_id": "C3",
+      "row": 3,
+      "col": 3,
+      "name": "Mara",
+      "profession": "Astronaut",
+      "true_status": "CRIMINAL",
+      "initially_revealed": false,
+      "clue": {
+        "clue_id": "clue_C3",
+        "owner_cell": "C3",
+        "clue_type": "AT_MOST",
+        "params": {
+          "k": 6,
+          "region": {
+            "region_type": "NEIGHBORS",
+            "target": "C2"
+          }
+        },
+        "text": "At most 6 criminals in neighbors of C2."
+      }
+    },
+    {
+      "cell_id": "D3",
+      "row": 3,
+      "col": 4,
+      "name": "Noah",
+      "profession": "Clerk",
+      "true_status": "INNOCENT",
+      "initially_revealed": false,
+      "clue": {
+        "clue_id": "clue_D3",
+        "owner_cell": "D3",
+        "clue_type": "AT_LEAST",
+        "params": {
+          "k": 4,
+          "region": {
+            "region_type": "NEIGHBORS",
+            "target": "E3"
+          }
+        },
+        "text": "At least 4 criminals in neighbors of E3."
+      }
+    },
+    {
+      "cell_id": "E3",
+      "row": 3,
+      "col": 5,
+      "name": "Owen",
+      "profession": "Clerk",
+      "true_status": "INNOCENT",
+      "initially_revealed": false,
+      "clue": {
+        "clue_id": "clue_E3",
+        "owner_cell": "E3",
+        "clue_type": "EXACTLY",
+        "params": {
+          "k": 6,
+          "region": {
+            "region_type": "NEIGHBORS",
+            "target": "D2"
+          }
+        },
+        "text": "Exactly 6 criminals in neighbors of D2."
+      }
+    },
+    {
+      "cell_id": "A4",
+      "row": 4,
+      "col": 1,
+      "name": "Priya",
+      "profession": "Farmer",
+      "true_status": "CRIMINAL",
+      "initially_revealed": false,
+      "clue": {
+        "clue_id": "clue_A4",
+        "owner_cell": "A4",
+        "clue_type": "EXACTLY",
+        "params": {
+          "k": 2,
+          "region": {
+            "region_type": "CELLS",
+            "target": [
+              "C1",
+              "E4"
+            ]
+          }
+        },
+        "text": "Exactly 2 criminals in {C1, E4}."
+      }
+    },
+    {
+      "cell_id": "B4",
+      "row": 4,
+      "col": 2,
+      "name": "Quilla",
+      "profession": "Detective",
+      "true_status": "CRIMINAL",
+      "initially_revealed": false,
+      "clue": {
+        "clue_id": "clue_B4",
+        "owner_cell": "B4",
+        "clue_type": "EXACTLY",
+        "params": {
+          "k": 7,
+          "region": {
+            "region_type": "NEIGHBORS",
+            "target": "B3"
+          }
+        },
+        "text": "Exactly 7 criminals in neighbors of B3."
+      }
+    },
+    {
+      "cell_id": "C4",
+      "row": 4,
+      "col": 3,
+      "name": "Roy",
+      "profession": "Guard",
+      "true_status": "CRIMINAL",
+      "initially_revealed": false,
+      "clue": {
+        "clue_id": "clue_C4",
+        "owner_cell": "C4",
+        "clue_type": "EXACTLY",
+        "params": {
+          "k": 6,
+          "region": {
+            "region_type": "NEIGHBORS",
+            "target": "C3"
+          }
+        },
+        "text": "Exactly 6 criminals in neighbors of C3."
+      }
+    },
+    {
+      "cell_id": "D4",
+      "row": 4,
+      "col": 4,
+      "name": "Sophia",
+      "profession": "Painter",
+      "true_status": "CRIMINAL",
+      "initially_revealed": true,
+      "clue": {
+        "clue_id": "clue_D4",
+        "owner_cell": "D4",
+        "clue_type": "EXACTLY",
+        "params": {
+          "k": 2,
+          "region": {
+            "region_type": "COMMON_NEIGHBORS",
+            "target": [
+              "E5",
+              "D5"
+            ]
+          }
+        },
+        "text": "Exactly 2 criminals in common neighbors of E5 and D5."
+      }
+    },
+    {
+      "cell_id": "E4",
+      "row": 4,
+      "col": 5,
+      "name": "Tom",
+      "profession": "Pilot",
+      "true_status": "CRIMINAL",
+      "initially_revealed": false,
+      "clue": {
+        "clue_id": "clue_E4",
+        "owner_cell": "E4",
+        "clue_type": "AT_LEAST",
+        "params": {
+          "k": 3,
+          "region": {
+            "region_type": "NEIGHBORS",
+            "target": "E5"
+          }
+        },
+        "text": "At least 3 criminals in neighbors of E5."
+      }
+    },
+    {
+      "cell_id": "A5",
+      "row": 5,
+      "col": 1,
+      "name": "Uma",
+      "profession": "Doctor",
+      "true_status": "CRIMINAL",
+      "initially_revealed": false,
+      "clue": {
+        "clue_id": "clue_A5",
+        "owner_cell": "A5",
+        "clue_type": "EXACTLY",
+        "params": {
+          "k": 11,
+          "region": {
+            "region_type": "BOUNDARY",
+            "target": null
+          }
+        },
+        "text": "Exactly 11 criminals in boundary."
+      }
+    },
+    {
+      "cell_id": "B5",
+      "row": 5,
+      "col": 2,
+      "name": "Victor",
+      "profession": "Guard",
+      "true_status": "INNOCENT",
+      "initially_revealed": false,
+      "clue": {
+        "clue_id": "clue_B5",
+        "owner_cell": "B5",
+        "clue_type": "FACT",
+        "params": {
+          "target": "D4",
+          "status": "CRIMINAL"
+        },
+        "text": "D4 is criminal."
+      }
+    },
+    {
+      "cell_id": "C5",
+      "row": 5,
+      "col": 3,
+      "name": "Wendy",
+      "profession": "Cook",
+      "true_status": "INNOCENT",
+      "initially_revealed": false,
+      "clue": {
+        "clue_id": "clue_C5",
+        "owner_cell": "C5",
+        "clue_type": "EXACTLY",
+        "params": {
+          "k": 3,
+          "region": {
+            "region_type": "NEIGHBORS",
+            "target": "E2"
+          }
+        },
+        "text": "Exactly 3 criminals in neighbors of E2."
+      }
+    },
+    {
+      "cell_id": "D5",
+      "row": 5,
+      "col": 4,
+      "name": "Xavier",
+      "profession": "Pilot",
+      "true_status": "CRIMINAL",
+      "initially_revealed": false,
+      "clue": {
+        "clue_id": "clue_D5",
+        "owner_cell": "D5",
+        "clue_type": "SAME",
+        "params": {
+          "target1": "E4",
+          "target2": "E1"
+        },
+        "text": "E4 and E1 have the same status."
+      }
+    },
+    {
+      "cell_id": "E5",
+      "row": 5,
+      "col": 5,
+      "name": "Yara",
+      "profession": "Detective",
+      "true_status": "CRIMINAL",
+      "initially_revealed": false,
+      "clue": {
+        "clue_id": "clue_E5",
+        "owner_cell": "E5",
+        "clue_type": "SAME",
+        "params": {
+          "target1": "E5",
+          "target2": "A5"
+        },
+        "text": "E5 and A5 have the same status."
+      }
+    }
+  ]
+}

@@ -1,0 +1,362 @@
+{
+  "puzzle_id": "06_grid_4x4_hard",
+  "title": "A Shared Alibi",
+  "difficulty": "Hard",
+  "num_rows": 4,
+  "num_cols": 4,
+  "description": "4 × 4 deduction case with 2 initial witness cards.",
+  "cells": [
+    {
+      "cell_id": "A1",
+      "row": 1,
+      "col": 1,
+      "name": "Abel",
+      "profession": "Astronaut",
+      "true_status": "INNOCENT",
+      "initially_revealed": true,
+      "clue": {
+        "clue_id": "clue_A1",
+        "owner_cell": "A1",
+        "clue_type": "COMPARE_REGIONS",
+        "params": {
+          "op": ">",
+          "region1": {
+            "region_type": "CELLS",
+            "target": [
+              "B3",
+              "C2"
+            ]
+          },
+          "region2": {
+            "region_type": "CELLS",
+            "target": [
+              "C3"
+            ]
+          }
+        },
+        "text": "More criminals in {B3, C2} than in {C3}."
+      }
+    },
+    {
+      "cell_id": "B1",
+      "row": 1,
+      "col": 2,
+      "name": "Bea",
+      "profession": "Cook",
+      "true_status": "CRIMINAL",
+      "initially_revealed": false,
+      "clue": {
+        "clue_id": "clue_B1",
+        "owner_cell": "B1",
+        "clue_type": "FACT",
+        "params": {
+          "target": "C3",
+          "status": "INNOCENT"
+        },
+        "text": "C3 is innocent."
+      }
+    },
+    {
+      "cell_id": "C1",
+      "row": 1,
+      "col": 3,
+      "name": "Clara",
+      "profession": "Guard",
+      "true_status": "INNOCENT",
+      "initially_revealed": false,
+      "clue": {
+        "clue_id": "clue_C1",
+        "owner_cell": "C1",
+        "clue_type": "AT_MOST",
+        "params": {
+          "k": 2,
+          "region": {
+            "region_type": "NEIGHBORS",
+            "target": "B1"
+          }
+        },
+        "text": "At most 2 criminals in neighbors of B1."
+      }
+    },
+    {
+      "cell_id": "D1",
+      "row": 1,
+      "col": 4,
+      "name": "Derek",
+      "profession": "Cook",
+      "true_status": "CRIMINAL",
+      "initially_revealed": false,
+      "clue": {
+        "clue_id": "clue_D1",
+        "owner_cell": "D1",
+        "clue_type": "AT_MOST",
+        "params": {
+          "k": 7,
+          "region": {
+            "region_type": "BOUNDARY",
+            "target": null
+          }
+        },
+        "text": "At most 7 criminals in boundary."
+      }
+    },
+    {
+      "cell_id": "A2",
+      "row": 2,
+      "col": 1,
+      "name": "Eliza",
+      "profession": "Detective",
+      "true_status": "CRIMINAL",
+      "initially_revealed": false,
+      "clue": {
+        "clue_id": "clue_A2",
+        "owner_cell": "A2",
+        "clue_type": "DIFFERENT",
+        "params": {
+          "target1": "C1",
+          "target2": "D2"
+        },
+        "text": "C1 and D2 have different status."
+      }
+    },
+    {
+      "cell_id": "B2",
+      "row": 2,
+      "col": 2,
+      "name": "Franz",
+      "profession": "Detective",
+      "true_status": "INNOCENT",
+      "initially_revealed": false,
+      "clue": {
+        "clue_id": "clue_B2",
+        "owner_cell": "B2",
+        "clue_type": "PARITY",
+        "params": {
+          "parity": "ODD",
+          "region": {
+            "region_type": "NEIGHBORS",
+            "target": "D3"
+          }
+        },
+        "text": "Criminal count in neighbors of D3 is odd."
+      }
+    },
+    {
+      "cell_id": "C2",
+      "row": 2,
+      "col": 3,
+      "name": "Grant",
+      "profession": "Clerk",
+      "true_status": "CRIMINAL",
+      "initially_revealed": false,
+      "clue": {
+        "clue_id": "clue_C2",
+        "owner_cell": "C2",
+        "clue_type": "PARITY",
+        "params": {
+          "parity": "EVEN",
+          "region": {
+            "region_type": "COL",
+            "target": "C"
+          }
+        },
+        "text": "Criminal count in col C is even."
+      }
+    },
+    {
+      "cell_id": "D2",
+      "row": 2,
+      "col": 4,
+      "name": "Hannah",
+      "profession": "Guard",
+      "true_status": "CRIMINAL",
+      "initially_revealed": false,
+      "clue": {
+        "clue_id": "clue_D2",
+        "owner_cell": "D2",
+        "clue_type": "EXACTLY",
+        "params": {
+          "k": 2,
+          "region": {
+            "region_type": "NEIGHBORS",
+            "target": "D4"
+          }
+        },
+        "text": "Exactly 2 criminals in neighbors of D4."
+      }
+    },
+    {
+      "cell_id": "A3",
+      "row": 3,
+      "col": 1,
+      "name": "Ivy",
+      "profession": "Clerk",
+      "true_status": "CRIMINAL",
+      "initially_revealed": false,
+      "clue": {
+        "clue_id": "clue_A3",
+        "owner_cell": "A3",
+        "clue_type": "PARITY",
+        "params": {
+          "parity": "ODD",
+          "region": {
+            "region_type": "CORNERS",
+            "target": null
+          }
+        },
+        "text": "Criminal count in corners is odd."
+      }
+    },
+    {
+      "cell_id": "B3",
+      "row": 3,
+      "col": 2,
+      "name": "Jonas",
+      "profession": "Farmer",
+      "true_status": "CRIMINAL",
+      "initially_revealed": false,
+      "clue": {
+        "clue_id": "clue_B3",
+        "owner_cell": "B3",
+        "clue_type": "DIFFERENT",
+        "params": {
+          "target1": "C3",
+          "target2": "C4"
+        },
+        "text": "C3 and C4 have different status."
+      }
+    },
+    {
+      "cell_id": "C3",
+      "row": 3,
+      "col": 3,
+      "name": "Karl",
+      "profession": "Painter",
+      "true_status": "INNOCENT",
+      "initially_revealed": true,
+      "clue": {
+        "clue_id": "clue_C3",
+        "owner_cell": "C3",
+        "clue_type": "PARITY",
+        "params": {
+          "parity": "EVEN",
+          "region": {
+            "region_type": "CELLS",
+            "target": [
+              "B3",
+              "C2"
+            ]
+          }
+        },
+        "text": "An even number in {B3, C2} are criminals."
+      }
+    },
+    {
+      "cell_id": "D3",
+      "row": 3,
+      "col": 4,
+      "name": "Leo",
+      "profession": "Farmer",
+      "true_status": "CRIMINAL",
+      "initially_revealed": false,
+      "clue": {
+        "clue_id": "clue_D3",
+        "owner_cell": "D3",
+        "clue_type": "SAME",
+        "params": {
+          "target1": "C3",
+          "target2": "A4"
+        },
+        "text": "C3 and A4 have the same status."
+      }
+    },
+    {
+      "cell_id": "A4",
+      "row": 4,
+      "col": 1,
+      "name": "Mara",
+      "profession": "Astronaut",
+      "true_status": "INNOCENT",
+      "initially_revealed": false,
+      "clue": {
+        "clue_id": "clue_A4",
+        "owner_cell": "A4",
+        "clue_type": "EXACTLY",
+        "params": {
+          "k": 5,
+          "region": {
+            "region_type": "NEIGHBORS",
+            "target": "C2"
+          }
+        },
+        "text": "Exactly 5 criminals in neighbors of C2."
+      }
+    },
+    {
+      "cell_id": "B4",
+      "row": 4,
+      "col": 2,
+      "name": "Noah",
+      "profession": "Clerk",
+      "true_status": "INNOCENT",
+      "initially_revealed": false,
+      "clue": {
+        "clue_id": "clue_B4",
+        "owner_cell": "B4",
+        "clue_type": "FACT",
+        "params": {
+          "target": "A1",
+          "status": "INNOCENT"
+        },
+        "text": "A1 is innocent."
+      }
+    },
+    {
+      "cell_id": "C4",
+      "row": 4,
+      "col": 3,
+      "name": "Owen",
+      "profession": "Clerk",
+      "true_status": "CRIMINAL",
+      "initially_revealed": false,
+      "clue": {
+        "clue_id": "clue_C4",
+        "owner_cell": "C4",
+        "clue_type": "EXACTLY",
+        "params": {
+          "k": 2,
+          "region": {
+            "region_type": "COMMON_NEIGHBORS",
+            "target": [
+              "B1",
+              "B2"
+            ]
+          }
+        },
+        "text": "Exactly 2 criminals in common neighbors of B1 and B2."
+      }
+    },
+    {
+      "cell_id": "D4",
+      "row": 4,
+      "col": 4,
+      "name": "Priya",
+      "profession": "Farmer",
+      "true_status": "INNOCENT",
+      "initially_revealed": false,
+      "clue": {
+        "clue_id": "clue_D4",
+        "owner_cell": "D4",
+        "clue_type": "AT_LEAST",
+        "params": {
+          "k": 3,
+          "region": {
+            "region_type": "ROW",
+            "target": 3
+          }
+        },
+        "text": "At least 3 criminals in row 3."
+      }
+    }
+  ]
+}
