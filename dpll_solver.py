@@ -27,7 +27,25 @@ class DPLLSolver:
         Nếu một clause rỗng (kể cả rỗng từ đầu), trả None. [] toàn công thức là SAT.
         Tạo danh sách mới để hai nhánh luôn độc lập.
         """
-        # === TODO (CODE TAY) ===
+
+        negative_lit = -literal
+        simplified: List[List[int]] = []
+
+        for clause in clauses:
+            if not clause:
+                return None
+
+            if literal in clause:
+                continue
+
+            new_clause = [lit for lit in clause if lit != negative_lit]
+            if not new_clause:
+                return None
+
+            simplified.append(new_clause)
+
+        return simplified
+        
         raise NotImplementedError("_simplify")
 
     def _unit_propagate(self, clauses: List[List[int]], assignment: Dict[int, bool],
@@ -36,7 +54,36 @@ class DPLLSolver:
         phép gán mới rồi gọi _simplify. Dừng ở điểm cố định; nếu xung đột trả
         (None, assignment). Kiểm tra clause rỗng trước khi coi là điểm cố định.
         """
-        # === TODO (CODE TAY) ===
+
+        current_clauses = clauses
+        current_assignment = assignment.copy()
+
+        while True:
+            unit: Optional[int] = None
+
+            for clause in current_clauses:
+                if not clause:
+                    return None, current_assignment
+                if len(clause) == 1 and unit is None:
+                    unit = clause[0]
+
+            if unit is None:
+                return current_clauses, current_assignment
+
+            var = abs(unit)
+            val = unit > 0
+
+            if var in current_assignment:
+                if current_assignment[var] != val:
+                    return None, current_assignment
+            else:
+                current_assignment[var] = val
+                stats.propagations += 1
+
+            current_clauses = self._simplify(current_clauses, unit)
+            if current_clauses is None:
+                return None, current_assignment
+
         raise NotImplementedError("_unit_propagate")
 
     def _dpll_recursive(self, clauses: List[List[int]], assignment: Dict[int, bool],
@@ -47,4 +94,41 @@ class DPLLSolver:
         mỗi nhánh thất bại bị bỏ. Trả model đầu tiên hoặc UNSAT khi cả hai thất bại.
         """
         # === TODO (CODE TAY) ===
+
+        simplified_clauses, current_assignment = self._unit_propagate(clauses, assignment, stats)
+        if simplified_clauses is None:
+            return False, None
+        if not simplified_clauses:
+            return True, current_assignment
+
+        var = min(
+            (
+                abs(lit)
+                for clause in simplified_clauses
+                for lit in clause
+                if abs(lit) not in current_assignment
+            ),
+            default=None
+        )
+
+        if var is None:
+            satisfied = all(
+                any((lit > 0) == current_assignment[abs(lit)] for lit in clause)
+                for clause in simplified_clauses
+            )
+            return (True, current_assignment) if satisfied else (False, None)
+
+        stats.decisions += 1
+        for value, literal in ((True, var), (False, -var)):
+            branch_assignment = current_assignment.copy()
+            branch_assignment[var] = value
+            branch_clauses = self._simplify(simplified_clauses, literal)
+
+            if branch_clauses is not None:
+                sat, model = self._dpll_recursive(branch_clauses, branch_assignment, num_vars, stats)
+                if sat:
+                    return True, model
+            stats.backtracks += 1
+        
+        return False, None
         raise NotImplementedError("_dpll_recursive")
