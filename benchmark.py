@@ -5,7 +5,6 @@ import sys
 from pathlib import Path
 from time import perf_counter
 
-import models
 from engine import GameEngine, load_puzzle
 from logic_agent import DeductiveAgent
 from puzzle_generator import CASES, PUZZLES
@@ -39,11 +38,7 @@ def write_csv(rows, stream):
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--csv",type=Path)
-    parser.add_argument("--require-dpll", action="store_true",
-                        help="Disable the semantic fallback for the experiment.")
     args = parser.parse_args()
-    if args.require_dpll:
-        models.USE_FALLBACK_WHEN_TODO_NOT_IMPLEMENTED = False
     results = [run(PUZZLES / (case[0]+".json")) for case in CASES]
     write_csv(results, sys.stdout)
     if args.csv:

@@ -45,8 +45,6 @@ class DPLLSolver:
             simplified.append(new_clause)
 
         return simplified
-        
-        raise NotImplementedError("_simplify")
 
     def _unit_propagate(self, clauses: List[List[int]], assignment: Dict[int, bool],
                         stats: SolverStats) -> Tuple[Optional[List[List[int]]], Dict[int, bool]]:
@@ -84,8 +82,6 @@ class DPLLSolver:
             if current_clauses is None:
                 return None, current_assignment
 
-        raise NotImplementedError("_unit_propagate")
-
     def _dpll_recursive(self, clauses: List[List[int]], assignment: Dict[int, bool],
                         num_vars: int, stats: SolverStats) -> Tuple[bool, Optional[Dict[int, bool]]]:
         """Lan truyền trước. Conflict → (False,None); hết clause → (True,assignment).
@@ -93,8 +89,6 @@ class DPLLSolver:
         Thử +v rồi −v trên bản sao assignment, rút gọn và đệ quy. Cộng backtracks
         mỗi nhánh thất bại bị bỏ. Trả model đầu tiên hoặc UNSAT khi cả hai thất bại.
         """
-        # === TODO (CODE TAY) ===
-
         simplified_clauses, current_assignment = self._unit_propagate(clauses, assignment, stats)
         if simplified_clauses is None:
             return False, None
@@ -129,6 +123,5 @@ class DPLLSolver:
                 if sat:
                     return True, model
             stats.backtracks += 1
-        
+
         return False, None
-        raise NotImplementedError("_dpll_recursive")

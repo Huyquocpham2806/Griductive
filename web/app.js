@@ -384,9 +384,10 @@
     } else {
       traceEl.innerHTML = trace
         .map((entry, idx) => {
-          const match = entry.match(/^([A-Z]\d+)/);
+          const match = entry.match(/\|\s*([A-Z]+\d+)\s*→/) || entry.match(/^([A-Z]+\d+)/);
           const cid = match ? match[1] : "";
-          return `<div class="trace-item" data-cell="${cid}"><span class="trace-num">#${idx + 1}</span><span>${formatClueHTML(entry)}</span></div>`;
+          const display = entry.replace(/^Step\s+\d+\s*\|\s*/, "");
+          return `<div class="trace-item" data-cell="${cid}"><span class="trace-num">#${idx + 1}</span><span>${formatClueHTML(display)}</span></div>`;
         })
         .join("");
       traceEl.querySelectorAll(".trace-item").forEach((item) => {

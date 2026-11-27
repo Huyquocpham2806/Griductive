@@ -6,13 +6,12 @@ from tempfile import TemporaryDirectory
 from pathlib import Path
 from unittest.mock import patch
 
-import models
 from benchmark import run
 from cnf_encoder import CNFEncoder
 from dpll_solver import DPLLSolver
 from engine import GameEngine, evaluate_clue_directly, load_puzzle, resolve_region, save_puzzle
-from logic_agent import DeductiveAgent, SemanticSearch, uniqueness
-from models import BINARY, Clue, SolverStats, Status, Verdict, board_ids
+from logic_agent import DeductiveAgent, uniqueness
+from models import Clue, SolverStats, Status, Verdict, board_ids
 from puzzle_generator import CASES, PUZZLES, generate, region
 
 C, I = Status.CRIMINAL, Status.INNOCENT
@@ -56,18 +55,22 @@ class Semantics(unittest.TestCase):
             (clue("COMPARE_REGIONS",region1=R,region2=S,op="<"),lambda x,y,z:x+y<y+z),
             (clue("COMPARE_REGIONS",region1=R,region2=S,op="=="),lambda x,y,z:x+y==y+z),
         ]
+        solver = DPLLSolver()
         for item, pred in predicates:
-            search = SemanticSearch(1,3,[item])
+            enc = CNFEncoder(1, 3)
+            clauses = enc.encode_clue(item)
             solutions = []
-            for bits in itertools.product((False,True),repeat=3):
-                states = {i:C if bit else I for i,bit in zip(ids,bits)}
-                self.assertEqual(evaluate_clue_directly(item,states,1,3),bool(pred(*bits)))
+            for bits in itertools.product((False, True), repeat=3):
+                states = {i: C if bit else I for i, bit in zip(ids, bits)}
+                self.assertEqual(evaluate_clue_directly(item, states, 1, 3), bool(pred(*bits)))
                 if pred(*bits):
                     solutions.append(states)
-            for partial in itertools.product((None,I,C),repeat=3):
-                known = {i:s for i,s in zip(ids,partial) if s}
-                expected = any(all(m[i]==s for i,s in known.items()) for m in solutions)
-                self.assertEqual(search.witness(known) is not None,expected)
+            for partial in itertools.product((None, I, C), repeat=3):
+                known = {i: s for i, s in zip(ids, partial) if s}
+                assumptions = [enc.cell_to_var[i] if s == C else -enc.cell_to_var[i] for i, s in known.items()]
+                expected = any(all(m[i] == s for i, s in known.items()) for m in solutions)
+                sat, _, _ = solver.solve(clauses, enc.num_vars, assumptions=assumptions)
+                self.assertEqual(sat, expected)
 
     def test_uniqueness(self):
         f = clue("FACT",target="A1",status=C)
@@ -108,6 +111,16 @@ class Gameplay(unittest.TestCase):
         self.assertEqual(self.agent.submit(hint.cell_id,hint.status),Verdict.ACCEPTED)
         self.assertEqual(self.agent.submit(hint.cell_id,hint.status),Verdict.ALREADY_REVEALED)
         self.assertEqual(len(self.agent.trace.entries),1)
+        step = self.agent.trace.steps[0]
+        self.assertEqual(step.step, 1)
+        self.assertEqual(step.cell_id, hint.cell_id)
+        self.assertEqual(step.verdict, hint.status)
+        self.assertEqual(step.active_clues, tuple(c.clue_id for c in state.clues))
+        self.assertEqual(len(step.sat_queries), 2)
+        self.assertEqual(step.revealed_clue_id, f"clue_{hint.cell_id}")
+        self.assertTrue(bool(step.revealed_clue_text))
+        self.assertIn("Step 1", self.agent.trace.entries[0])
+        self.assertIn(f"clue_{hint.cell_id}", self.agent.trace.entries[0])
 
     def test_inconsistent_public_kb(self):
         state = self.engine.public_state()
@@ -116,14 +129,13 @@ class Gameplay(unittest.TestCase):
         broken = replace(state,clues=(*state.clues,false_fact))
         self.assertEqual(self.agent.classify(broken,k),Status.INCONSISTENT)
 
-    def test_fallback_selection_and_strict_mode(self):
+    def test_dpll_delegation_and_cache(self):
         state = self.engine.public_state()
-        with patch("logic_agent.classify_cell",return_value=(C,SolverStats(mode="DPLL",sat_calls=2))):
-            self.assertEqual(self.agent.classify(state,"A1"),C)
-            self.assertEqual(self.agent.stats.sat_calls,2)
-        with patch("logic_agent.classify_cell",side_effect=NotImplementedError), patch.object(models,"USE_FALLBACK_WHEN_TODO_NOT_IMPLEMENTED",False):
-            with self.assertRaises(NotImplementedError):
-                self.agent.classify(state,"B1")
+        with patch("logic_agent.classify_cell", return_value=(C, SolverStats(mode="DPLL", sat_calls=2))) as mock_cls:
+            self.assertEqual(self.agent.classify(state, "A1"), C)
+            self.assertEqual(self.agent.classify(state, "A1"), C)
+            self.assertEqual(mock_cls.call_count, 1)
+            self.assertEqual(self.agent.stats.sat_calls, 2)
 
     def test_eight_shipped_cases(self):
         for key,*_ in CASES:
@@ -156,3 +168,9 @@ class Gameplay(unittest.TestCase):
         self.assertEqual(enc.aux_vars,0)
         with self.assertRaises(ValueError):
             DPLLSolver().solve([[0]],1)
+        with self.assertRaises(ValueError):
+            enc.encode_parity("INVALID", [])
+        with self.assertRaises(ValueError):
+            enc.encode_parity("INVALID", [1])
+        with self.assertRaises(ValueError):
+            enc.encode_compare_regions("!=", [1], [2])

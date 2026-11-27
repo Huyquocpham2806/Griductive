@@ -18,6 +18,7 @@ from pathlib import Path
 from typing import Any
 from urllib.parse import urlparse
 
+from cnf_encoder import CNFEncoder
 from engine import GameEngine, clue_groups, load_puzzle, validate_puzzle
 from logic_agent import DeductiveAgent, uniqueness
 from models import Cell, Clue, Puzzle, Status, Verdict
@@ -70,11 +71,11 @@ class GameSession:
         self.engine = GameEngine(puzzle)
         self.agent = DeductiveAgent(self.engine)
         state = self.engine.public_state()
-        if state.clues:
-            try:
-                self.agent.classify(state, state.clues[0].owner_cell)
-            except NotImplementedError:
-                pass
+        enc = CNFEncoder(state.num_rows, state.num_cols)
+        enc.build_kb(state)
+        self.agent.stats.primary_vars = enc.primary_vars
+        self.agent.stats.aux_vars = enc.aux_vars
+        self.agent.stats.cnf_clauses = enc.num_clauses
         return self._serialize_state()
 
     def _serialize_state(self) -> dict[str, Any]:
@@ -337,11 +338,6 @@ def _make_handler(session: GameSession):
                     self._send_json(session.check_uniqueness())
                 else:
                     self._send_json({"error": "Unknown endpoint"}, HTTPStatus.NOT_FOUND)
-            except NotImplementedError as err:
-                self._send_json(
-                    {"error": f"Hàm chưa được cài đặt (NotImplementedError): {err}"},
-                    HTTPStatus.NOT_IMPLEMENTED,
-                )
             except (KeyError, ValueError, TypeError, json.JSONDecodeError) as err:
                 self._send_json({"error": str(err)}, HTTPStatus.BAD_REQUEST)
             except Exception as err:

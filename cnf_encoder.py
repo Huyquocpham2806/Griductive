@@ -57,19 +57,16 @@ class CNFEncoder:
 
     def encode_same(self, var_a: int, var_b: int) -> List[List[int]]:
         """a ↔ b. Tách thành a→b và b→a. Đổi từng kéo theo thành một clause."""
-        # === TODO (CODE TAY) ===
         return [[-var_a, var_b], [var_a, -var_b]]
 
     def encode_different(self, var_a: int, var_b: int) -> List[List[int]]:
         """a XOR b. Loại hai hàng 00 và 11 khỏi bảng chân trị bằng hai clause."""
-        # === TODO (CODE TAY) ===
         return [[var_a, var_b], [-var_a, -var_b]]
 
     def encode_at_most(self, k: int, region_vars: List[int]) -> List[List[int]]:
         """Σx ≤ k. Với mỗi tập k+1 biến, cấm tất cả cùng đúng bằng literal âm.
         k≥n trả [] (hằng đúng), k<0 trả [[]] (hằng sai). Kiểm tra cả n=0.
         """
-        # === TODO (CODE TAY) ===
         n = len(region_vars)
         if k < 0:
             return [[]]
@@ -77,23 +74,19 @@ class CNFEncoder:
             return []
         return [[-var for var in comb] for comb in combinations(region_vars, k + 1)]
 
-        
-
     def encode_at_least(self, k: int, region_vars: List[int]) -> List[List[int]]:
         """Σx ≥ k. Mỗi tập n−k+1 biến cần ít nhất một literal dương đúng.
         k≤0 trả [], k>n trả [[]]. Thử n=3, k=2 trên đủ 8 phép gán.
         """
-        # === TODO (CODE TAY) ===
         n = len(region_vars)
         if k <= 0:
             return []
         if k > n:
-            return  [[]]
+            return [[]]
         return [[var for var in comb] for comb in combinations(region_vars, n - k + 1)]
 
     def encode_exactly(self, k: int, region_vars: List[int]) -> List[List[int]]:
         """Σx = k iff (Σx ≥ k) ∧ (Σx ≤ k). Ghép hai danh sách clause."""
-        # === TODO (CODE TAY) ===
         return self.encode_at_least(k, region_vars) + self.encode_at_most(k, region_vars)
 
     def encode_parity(self, parity_type: str, region_vars: List[int]) -> List[List[int]]:
@@ -101,13 +94,11 @@ class CNFEncoder:
         Nối từng bit bằng z ↔ (x XOR y), cấp z qua fresh_var(), chặn bốn hàng sai
         của bảng ba biến. Ép bit cuối bằng unit clause. Chú ý vùng rỗng/đơn.
         """
-        # === TODO (CODE TAY) ===
+        if parity_type not in ("EVEN", "ODD"):
+            raise ValueError(f"Invalid parity type: {parity_type}")
         n = len(region_vars)
         if n == 0:
-            if parity_type == "EVEN":
-                return []
-            if parity_type == "ODD":
-                return [[]]
+            return [] if parity_type == "EVEN" else [[]]
 
         res = []
         x = region_vars[0]
@@ -120,19 +111,17 @@ class CNFEncoder:
                 [-z, -x, -y],
             ])
             x = z
-        if parity_type == "EVEN":
-            res.append([-x])
-        if parity_type == "ODD":
-            res.append([x])
+        res.append([-x] if parity_type == "EVEN" else [x])
         return res
-        
+
     def encode_compare_regions(self, op: str, vars_r1: List[int], vars_r2: List[int]) -> List[List[int]]:
         """Khử biến chung vì chúng đóng góp bằng nhau cho hai vế.
         Gọi A,B là hai tập còn lại. ΣA−ΣB = Σ(A ∪ {¬b | b∈B})−|B|.
         Với ==, >, < lần lượt ép tổng literal bằng |B|, ≥|B|+1, ≤|B|−1.
         Các hàm cardinality cần nhận literal có dấu; đổi dấu để lấy phủ định.
         """
-        # === TODO (CODE TAY) ===
+        if op not in ("==", ">", "<"):
+            raise ValueError(f"Invalid comparison operator: {op}")
         A = [x for x in vars_r1 if x not in vars_r2]
         B = [x for x in vars_r2 if x not in vars_r1]
         C = A + [-b for b in B]
@@ -140,7 +129,6 @@ class CNFEncoder:
             return self.encode_exactly(len(B), C)
         if op == ">":
             return self.encode_at_least(len(B) + 1, C)
-        if op == "<":
-            return self.encode_at_most(len(B) - 1, C)
+        return self.encode_at_most(len(B) - 1, C)
         
 
