@@ -17,7 +17,41 @@ def classify_cell(public_state: PublicState, cell_id: str) -> Tuple[Status, Solv
     Cộng các bộ đếm và runtime của hai truy vấn, đặt primary_vars, aux_vars,
     cnf_clauses từ encoder rồi trả (status, stats). Không truy cập đáp án.
     """
-    # === TODO (CODE TAY) ===
+
+    encoder = CNFEncoder(public_state.num_rows, public_state.num_cols)
+    if cell_id not in encoder.cell_to_var:
+        raise ValueError(f"Unknown cell: {cell_id}")
+
+    kb = encoder.build_kb(public_state)
+    var = encoder.cell_to_var[cell_id]
+
+    solver = DPLLSolver()
+    sat_pos, _, stats_pos = solver.solve(kb, encoder.num_vars, assumptions = [var])
+    sat_neg, _, stats_neg = solver.solve(kb, encoder.num_vars, assumptions = [-var])
+
+    if sat_pos and not sat_neg:
+        status = Status.CRIMINAL
+    elif not sat_pos and sat_neg:
+        status = Status.INNOCENT
+    elif sat_pos and sat_neg:
+        status = Status.UNKNOWN
+    else:
+        status = Status.INCONSISTENT
+
+    stats = SolverStats(
+        mode = "DPLL",
+        primary_vars = encoder.primary_vars,
+        aux_vars = encoder.aux_vars,
+        cnf_clauses = encoder.num_clauses,
+        sat_calls = stats_pos.sat_calls + stats_neg.sat_calls,
+        decisions = stats_pos.decisions + stats_neg.decisions,
+        propagations = stats_pos.propagations + stats_neg.propagations,
+        backtracks = stats_pos.backtracks + stats_neg.backtracks,
+        runtime_sec = stats_pos.runtime_sec + stats_neg.runtime_sec
+    )
+
+    return status, stats
+
     raise NotImplementedError("classify_cell")
 
 
@@ -27,7 +61,27 @@ def check_uniqueness(all_clues: List[Clue], num_rows: int, num_cols: int) -> boo
     cho các biến Ô (bỏ qua biến phụ). Trả True iff lần solve thứ hai UNSAT.
     Muốn tính cả trạng thái mở đầu, truyền thêm FACT tương ứng.
     """
-    # === TODO (CODE TAY) ===
+
+    encoder = CNFEncoder(num_rows, num_cols)
+    clauses: List[List[int]] = []
+
+    for clue in all_clues:
+        clauses.extend(encoder.encode_clue(clue))
+
+    solver = DPLLSolver()
+    sat_first, model, _ = solver.solve(clauses, encoder.num_vars)
+
+    if not sat_first or model is None:
+        return False
+
+    blocking_clause = [
+        -var if model[var] else var
+        for var in range(1, encoder.primary_vars + 1)
+    ]
+
+    sat_second, _, _ = solver.solve(clauses + [blocking_clause], encoder.num_vars)
+    return not sat_second
+    
     raise NotImplementedError("check_uniqueness")
 
 
