@@ -4,7 +4,7 @@
   "difficulty": "Medium",
   "num_rows": 4,
   "num_cols": 4,
-  "description": "4 × 4 deduction case with 1 initial witness cards.",
+  "description": "4 × 4 deduction case with 1 initial witness card.",
   "cells": [
     {
       "cell_id": "A1",
@@ -12,23 +12,24 @@
       "col": 1,
       "name": "Abel",
       "profession": "Astronaut",
-      "true_status": "CRIMINAL",
+      "true_status": "INNOCENT",
       "initially_revealed": false,
       "clue": {
         "clue_id": "clue_A1",
         "owner_cell": "A1",
-        "clue_type": "AT_LEAST",
+        "clue_type": "EXACTLY",
         "params": {
-          "k": 2,
+          "k": 3,
           "region": {
             "region_type": "CELLS",
             "target": [
-              "D1",
+              "B3",
+              "D3",
               "D4"
             ]
           }
         },
-        "text": "At least 2 criminals in {D1, D4}."
+        "text": "All Farmers are criminals."
       }
     },
     {
@@ -37,20 +38,20 @@
       "col": 2,
       "name": "Bea",
       "profession": "Cook",
-      "true_status": "CRIMINAL",
+      "true_status": "INNOCENT",
       "initially_revealed": false,
       "clue": {
         "clue_id": "clue_B1",
         "owner_cell": "B1",
-        "clue_type": "EXACTLY",
+        "clue_type": "AT_LEAST",
         "params": {
-          "k": 2,
+          "k": 3,
           "region": {
-            "region_type": "NEIGHBORS",
-            "target": "B3"
+            "region_type": "COL",
+            "target": "B"
           }
         },
-        "text": "Exactly 2 criminals in neighbors of B3."
+        "text": "Column B has at least 3 criminals."
       }
     },
     {
@@ -59,17 +60,23 @@
       "col": 3,
       "name": "Clara",
       "profession": "Guard",
-      "true_status": "INNOCENT",
+      "true_status": "CRIMINAL",
       "initially_revealed": false,
       "clue": {
         "clue_id": "clue_C1",
         "owner_cell": "C1",
-        "clue_type": "FACT",
+        "clue_type": "EXACTLY",
         "params": {
-          "target": "B4",
-          "status": "CRIMINAL"
+          "k": 2,
+          "region": {
+            "region_type": "COMMON_NEIGHBORS",
+            "target": [
+              "B1",
+              "C1"
+            ]
+          }
         },
-        "text": "B4 is criminal."
+        "text": "All common neighbors of B1 & C1 are criminals."
       }
     },
     {
@@ -83,12 +90,15 @@
       "clue": {
         "clue_id": "clue_D1",
         "owner_cell": "D1",
-        "clue_type": "SAME",
+        "clue_type": "EXACTLY",
         "params": {
-          "target1": "B3",
-          "target2": "B2"
+          "k": 0,
+          "region": {
+            "region_type": "COL",
+            "target": "A"
+          }
         },
-        "text": "B3 and B2 have the same status."
+        "text": "Column A has no criminals."
       }
     },
     {
@@ -102,15 +112,12 @@
       "clue": {
         "clue_id": "clue_A2",
         "owner_cell": "A2",
-        "clue_type": "EXACTLY",
+        "clue_type": "DIFFERENT",
         "params": {
-          "k": 1,
-          "region": {
-            "region_type": "COL",
-            "target": "A"
-          }
+          "target1": "A3",
+          "target2": "B3"
         },
-        "text": "Exactly 1 criminals in col A."
+        "text": "Ivy (A3) and Jonas (B3) have opposite statuses."
       }
     },
     {
@@ -119,7 +126,7 @@
       "col": 2,
       "name": "Franz",
       "profession": "Detective",
-      "true_status": "INNOCENT",
+      "true_status": "CRIMINAL",
       "initially_revealed": false,
       "clue": {
         "clue_id": "clue_B2",
@@ -128,15 +135,11 @@
         "params": {
           "k": 2,
           "region": {
-            "region_type": "CELLS",
-            "target": [
-              "A1",
-              "B1",
-              "B3"
-            ]
+            "region_type": "NEIGHBORS",
+            "target": "A2"
           }
         },
-        "text": "Exactly 2 criminals in {A1, B1, B3}."
+        "text": "Eliza (A2) has exactly 2 criminal neighbors."
       }
     },
     {
@@ -145,20 +148,23 @@
       "col": 3,
       "name": "Grant",
       "profession": "Clerk",
-      "true_status": "INNOCENT",
+      "true_status": "CRIMINAL",
       "initially_revealed": false,
       "clue": {
         "clue_id": "clue_C2",
         "owner_cell": "C2",
         "clue_type": "AT_LEAST",
         "params": {
-          "k": 5,
+          "k": 1,
           "region": {
-            "region_type": "NEIGHBORS",
-            "target": "C3"
+            "region_type": "CELLS",
+            "target": [
+              "A2",
+              "B2"
+            ]
           }
         },
-        "text": "At least 5 criminals in neighbors of C3."
+        "text": "At least 1 Detective is a criminal."
       }
     },
     {
@@ -167,17 +173,17 @@
       "col": 4,
       "name": "Hannah",
       "profession": "Guard",
-      "true_status": "CRIMINAL",
+      "true_status": "INNOCENT",
       "initially_revealed": false,
       "clue": {
         "clue_id": "clue_D2",
         "owner_cell": "D2",
         "clue_type": "SAME",
         "params": {
-          "target1": "A4",
-          "target2": "C1"
+          "target1": "B2",
+          "target2": "C3"
         },
-        "text": "A4 and C1 have the same status."
+        "text": "Franz (B2) and Karl (C3) share the same status."
       }
     },
     {
@@ -191,12 +197,15 @@
       "clue": {
         "clue_id": "clue_A3",
         "owner_cell": "A3",
-        "clue_type": "SAME",
+        "clue_type": "AT_LEAST",
         "params": {
-          "target1": "B3",
-          "target2": "C3"
+          "k": 2,
+          "region": {
+            "region_type": "ROW",
+            "target": 1
+          }
         },
-        "text": "B3 and C3 have the same status."
+        "text": "Row 1 has at least 2 criminals."
       }
     },
     {
@@ -205,20 +214,17 @@
       "col": 2,
       "name": "Jonas",
       "profession": "Farmer",
-      "true_status": "INNOCENT",
+      "true_status": "CRIMINAL",
       "initially_revealed": false,
       "clue": {
         "clue_id": "clue_B3",
         "owner_cell": "B3",
-        "clue_type": "AT_MOST",
+        "clue_type": "SAME",
         "params": {
-          "k": 1,
-          "region": {
-            "region_type": "NEIGHBORS",
-            "target": "A4"
-          }
+          "target1": "B4",
+          "target2": "C4"
         },
-        "text": "At most 1 criminals in neighbors of A4."
+        "text": "Noah (B4) and Owen (C4) share the same status."
       }
     },
     {
@@ -227,20 +233,20 @@
       "col": 3,
       "name": "Karl",
       "profession": "Painter",
-      "true_status": "INNOCENT",
+      "true_status": "CRIMINAL",
       "initially_revealed": false,
       "clue": {
         "clue_id": "clue_C3",
         "owner_cell": "C3",
-        "clue_type": "EXACTLY",
+        "clue_type": "AT_MOST",
         "params": {
-          "k": 1,
+          "k": 2,
           "region": {
             "region_type": "ROW",
-            "target": 3
+            "target": 2
           }
         },
-        "text": "Exactly 1 criminals in row 3."
+        "text": "Row 2 has at most 2 criminals."
       }
     },
     {
@@ -256,18 +262,13 @@
         "owner_cell": "D3",
         "clue_type": "EXACTLY",
         "params": {
-          "k": 2,
+          "k": 5,
           "region": {
-            "region_type": "CELLS",
-            "target": [
-              "A3",
-              "C3",
-              "C4",
-              "D3"
-            ]
+            "region_type": "NEIGHBORS",
+            "target": "C4"
           }
         },
-        "text": "Exactly 2 criminals in {A3, C3, C4, D3}."
+        "text": "All of Owen's (C4) neighbors are criminals."
       }
     },
     {
@@ -277,16 +278,22 @@
       "name": "Mara",
       "profession": "Astronaut",
       "true_status": "INNOCENT",
-      "initially_revealed": false,
+      "initially_revealed": true,
       "clue": {
         "clue_id": "clue_A4",
         "owner_cell": "A4",
-        "clue_type": "SAME",
+        "clue_type": "EXACTLY",
         "params": {
-          "target1": "D3",
-          "target2": "D4"
+          "k": 2,
+          "region": {
+            "region_type": "COMMON_NEIGHBORS",
+            "target": [
+              "B2",
+              "D3"
+            ]
+          }
         },
-        "text": "D3 and D4 have the same status."
+        "text": "All common neighbors of B2 & D3 are criminals."
       }
     },
     {
@@ -296,22 +303,19 @@
       "name": "Noah",
       "profession": "Clerk",
       "true_status": "CRIMINAL",
-      "initially_revealed": true,
+      "initially_revealed": false,
       "clue": {
         "clue_id": "clue_B4",
         "owner_cell": "B4",
         "clue_type": "EXACTLY",
         "params": {
-          "k": 1,
+          "k": 2,
           "region": {
-            "region_type": "COMMON_NEIGHBORS",
-            "target": [
-              "A4",
-              "A3"
-            ]
+            "region_type": "CORNERS",
+            "target": null
           }
         },
-        "text": "Exactly 1 criminals in common neighbors of A4 and A3."
+        "text": "Exactly 2 corners are criminals."
       }
     },
     {
@@ -325,15 +329,15 @@
       "clue": {
         "clue_id": "clue_C4",
         "owner_cell": "C4",
-        "clue_type": "AT_MOST",
+        "clue_type": "EXACTLY",
         "params": {
-          "k": 1,
+          "k": 3,
           "region": {
-            "region_type": "NEIGHBORS",
-            "target": "B4"
+            "region_type": "ROW",
+            "target": 3
           }
         },
-        "text": "At most 1 criminals in neighbors of B4."
+        "text": "Row 3 has exactly 3 criminals."
       }
     },
     {
@@ -349,16 +353,16 @@
         "owner_cell": "D4",
         "clue_type": "EXACTLY",
         "params": {
-          "k": 1,
+          "k": 2,
           "region": {
-            "region_type": "CELLS",
+            "region_type": "COMMON_NEIGHBORS",
             "target": [
-              "A2",
-              "D3"
+              "C1",
+              "C3"
             ]
           }
         },
-        "text": "Exactly 1 criminals in {A2, D3}."
+        "text": "C1 and C3 share exactly 2 criminal neighbors."
       }
     }
   ]

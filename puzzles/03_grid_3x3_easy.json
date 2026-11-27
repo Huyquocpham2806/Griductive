@@ -4,7 +4,7 @@
   "difficulty": "Easy",
   "num_rows": 3,
   "num_cols": 3,
-  "description": "3 × 3 deduction case with 1 initial witness cards.",
+  "description": "3 × 3 deduction case with 1 initial witness card.",
   "cells": [
     {
       "cell_id": "A1",
@@ -12,17 +12,23 @@
       "col": 1,
       "name": "Abel",
       "profession": "Astronaut",
-      "true_status": "INNOCENT",
+      "true_status": "CRIMINAL",
       "initially_revealed": false,
       "clue": {
         "clue_id": "clue_A1",
         "owner_cell": "A1",
-        "clue_type": "DIFFERENT",
+        "clue_type": "EXACTLY",
         "params": {
-          "target1": "C3",
-          "target2": "A3"
+          "k": 1,
+          "region": {
+            "region_type": "COMMON_NEIGHBORS",
+            "target": [
+              "B2",
+              "A3"
+            ]
+          }
         },
-        "text": "C3 and A3 have different status."
+        "text": "B2 and A3 share exactly 1 criminal neighbor."
       }
     },
     {
@@ -36,15 +42,12 @@
       "clue": {
         "clue_id": "clue_B1",
         "owner_cell": "B1",
-        "clue_type": "EXACTLY",
+        "clue_type": "SAME",
         "params": {
-          "k": 4,
-          "region": {
-            "region_type": "BOUNDARY",
-            "target": null
-          }
+          "target1": "A1",
+          "target2": "B1"
         },
-        "text": "Exactly 4 criminals in boundary."
+        "text": "Abel (A1) and Bea (B1) share the same status."
       }
     },
     {
@@ -53,17 +56,20 @@
       "col": 3,
       "name": "Clara",
       "profession": "Guard",
-      "true_status": "CRIMINAL",
+      "true_status": "INNOCENT",
       "initially_revealed": false,
       "clue": {
         "clue_id": "clue_C1",
         "owner_cell": "C1",
-        "clue_type": "DIFFERENT",
+        "clue_type": "EXACTLY",
         "params": {
-          "target1": "A1",
-          "target2": "B1"
+          "k": 2,
+          "region": {
+            "region_type": "CORNERS",
+            "target": null
+          }
         },
-        "text": "A1 and B1 have different status."
+        "text": "Exactly 2 corners are criminals."
       }
     },
     {
@@ -77,18 +83,15 @@
       "clue": {
         "clue_id": "clue_A2",
         "owner_cell": "A2",
-        "clue_type": "AT_MOST",
+        "clue_type": "EXACTLY",
         "params": {
-          "k": 0,
+          "k": 1,
           "region": {
-            "region_type": "CELLS",
-            "target": [
-              "A1",
-              "C3"
-            ]
+            "region_type": "COL",
+            "target": "A"
           }
         },
-        "text": "At most 0 criminals in {A1, C3}."
+        "text": "Column A has exactly 1 criminal."
       }
     },
     {
@@ -102,15 +105,15 @@
       "clue": {
         "clue_id": "clue_B2",
         "owner_cell": "B2",
-        "clue_type": "AT_LEAST",
+        "clue_type": "EXACTLY",
         "params": {
           "k": 2,
           "region": {
-            "region_type": "CORNERS",
-            "target": null
+            "region_type": "ROW",
+            "target": 1
           }
         },
-        "text": "At least 2 criminals in corners."
+        "text": "Row 1 has exactly 2 criminals."
       }
     },
     {
@@ -119,20 +122,17 @@
       "col": 3,
       "name": "Franz",
       "profession": "Detective",
-      "true_status": "CRIMINAL",
+      "true_status": "INNOCENT",
       "initially_revealed": false,
       "clue": {
         "clue_id": "clue_C2",
         "owner_cell": "C2",
-        "clue_type": "EXACTLY",
+        "clue_type": "DIFFERENT",
         "params": {
-          "k": 2,
-          "region": {
-            "region_type": "NEIGHBORS",
-            "target": "B3"
-          }
+          "target1": "B2",
+          "target2": "C3"
         },
-        "text": "Exactly 2 criminals in neighbors of B3."
+        "text": "Eliza (B2) and Ivy (C3) have opposite statuses."
       }
     },
     {
@@ -141,7 +141,7 @@
       "col": 1,
       "name": "Grant",
       "profession": "Clerk",
-      "true_status": "CRIMINAL",
+      "true_status": "INNOCENT",
       "initially_revealed": false,
       "clue": {
         "clue_id": "clue_A3",
@@ -152,12 +152,12 @@
           "region": {
             "region_type": "CELLS",
             "target": [
-              "A1",
-              "C2"
+              "C1",
+              "B3"
             ]
           }
         },
-        "text": "Exactly 1 criminals in {A1, C2}."
+        "text": "Exactly 1 Guard is a criminal."
       }
     },
     {
@@ -166,17 +166,23 @@
       "col": 2,
       "name": "Hannah",
       "profession": "Guard",
-      "true_status": "INNOCENT",
-      "initially_revealed": false,
+      "true_status": "CRIMINAL",
+      "initially_revealed": true,
       "clue": {
         "clue_id": "clue_B3",
         "owner_cell": "B3",
-        "clue_type": "FACT",
+        "clue_type": "EXACTLY",
         "params": {
-          "target": "C3",
-          "status": "INNOCENT"
+          "k": 0,
+          "region": {
+            "region_type": "CELLS",
+            "target": [
+              "B2",
+              "C2"
+            ]
+          }
         },
-        "text": "C3 is innocent."
+        "text": "Both Detectives are innocent."
       }
     },
     {
@@ -185,17 +191,20 @@
       "col": 3,
       "name": "Ivy",
       "profession": "Clerk",
-      "true_status": "INNOCENT",
-      "initially_revealed": true,
+      "true_status": "CRIMINAL",
+      "initially_revealed": false,
       "clue": {
         "clue_id": "clue_C3",
         "owner_cell": "C3",
-        "clue_type": "FACT",
+        "clue_type": "AT_MOST",
         "params": {
-          "target": "A2",
-          "status": "INNOCENT"
+          "k": 1,
+          "region": {
+            "region_type": "NEIGHBORS",
+            "target": "B1"
+          }
         },
-        "text": "A2 is innocent."
+        "text": "Bea (B1) has at most 1 criminal neighbor."
       }
     }
   ]

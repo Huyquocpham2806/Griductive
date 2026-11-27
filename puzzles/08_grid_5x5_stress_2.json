@@ -19,13 +19,13 @@
         "owner_cell": "A1",
         "clue_type": "EXACTLY",
         "params": {
-          "k": 6,
+          "k": 1,
           "region": {
             "region_type": "NEIGHBORS",
-            "target": "D4"
+            "target": "B5"
           }
         },
-        "text": "Exactly 6 criminals in neighbors of D4."
+        "text": "Victor (B5) has exactly 1 criminal neighbor."
       }
     },
     {
@@ -39,12 +39,15 @@
       "clue": {
         "clue_id": "clue_B1",
         "owner_cell": "B1",
-        "clue_type": "FACT",
+        "clue_type": "PARITY",
         "params": {
-          "target": "C2",
-          "status": "CRIMINAL"
+          "parity": "ODD",
+          "region": {
+            "region_type": "NEIGHBORS",
+            "target": "D5"
+          }
         },
-        "text": "C2 is criminal."
+        "text": "Xavier (D5) has an odd number of criminal neighbors."
       }
     },
     {
@@ -58,12 +61,15 @@
       "clue": {
         "clue_id": "clue_C1",
         "owner_cell": "C1",
-        "clue_type": "FACT",
+        "clue_type": "EXACTLY",
         "params": {
-          "target": "D5",
-          "status": "INNOCENT"
+          "k": 2,
+          "region": {
+            "region_type": "NEIGHBORS",
+            "target": "A1"
+          }
         },
-        "text": "D5 is innocent."
+        "text": "Abel (A1) has exactly 2 criminal neighbors."
       }
     },
     {
@@ -77,15 +83,15 @@
       "clue": {
         "clue_id": "clue_D1",
         "owner_cell": "D1",
-        "clue_type": "PARITY",
+        "clue_type": "AT_MOST",
         "params": {
-          "parity": "EVEN",
+          "k": 1,
           "region": {
-            "region_type": "ROW",
-            "target": 4
+            "region_type": "NEIGHBORS",
+            "target": "B4"
           }
         },
-        "text": "Criminal count in row 4 is even."
+        "text": "Quilla (B4) has at most 1 criminal neighbor."
       }
     },
     {
@@ -99,12 +105,20 @@
       "clue": {
         "clue_id": "clue_E1",
         "owner_cell": "E1",
-        "clue_type": "SAME",
+        "clue_type": "EXACTLY",
         "params": {
-          "target1": "C2",
-          "target2": "A1"
+          "k": 1,
+          "region": {
+            "region_type": "CELLS",
+            "target": [
+              "B2",
+              "D2",
+              "D3",
+              "E3"
+            ]
+          }
         },
-        "text": "C2 and A1 have the same status."
+        "text": "Exactly 1 Clerk is a criminal."
       }
     },
     {
@@ -114,19 +128,22 @@
       "name": "Franz",
       "profession": "Detective",
       "true_status": "INNOCENT",
-      "initially_revealed": false,
+      "initially_revealed": true,
       "clue": {
         "clue_id": "clue_A2",
         "owner_cell": "A2",
-        "clue_type": "AT_MOST",
+        "clue_type": "PARITY",
         "params": {
-          "k": 6,
+          "parity": "EVEN",
           "region": {
-            "region_type": "NEIGHBORS",
-            "target": "B4"
+            "region_type": "CELLS",
+            "target": [
+              "E4",
+              "D5"
+            ]
           }
         },
-        "text": "At most 6 criminals in neighbors of B4."
+        "text": "An even number of Pilots are criminals."
       }
     },
     {
@@ -135,23 +152,17 @@
       "col": 2,
       "name": "Grant",
       "profession": "Clerk",
-      "true_status": "INNOCENT",
+      "true_status": "CRIMINAL",
       "initially_revealed": false,
       "clue": {
         "clue_id": "clue_B2",
         "owner_cell": "B2",
-        "clue_type": "EXACTLY",
+        "clue_type": "SAME",
         "params": {
-          "k": 1,
-          "region": {
-            "region_type": "CELLS",
-            "target": [
-              "B4",
-              "D5"
-            ]
-          }
+          "target1": "A2",
+          "target2": "A3"
         },
-        "text": "Exactly 1 criminals in {B4, D5}."
+        "text": "Franz (A2) and Karl (A3) share the same status."
       }
     },
     {
@@ -161,28 +172,22 @@
       "name": "Hannah",
       "profession": "Guard",
       "true_status": "CRIMINAL",
-      "initially_revealed": true,
+      "initially_revealed": false,
       "clue": {
         "clue_id": "clue_C2",
         "owner_cell": "C2",
-        "clue_type": "COMPARE_REGIONS",
+        "clue_type": "EXACTLY",
         "params": {
-          "op": ">",
-          "region1": {
+          "k": 1,
+          "region": {
             "region_type": "CELLS",
             "target": [
-              "D3",
-              "C5"
-            ]
-          },
-          "region2": {
-            "region_type": "CELLS",
-            "target": [
-              "D5"
+              "A3",
+              "D4"
             ]
           }
         },
-        "text": "More criminals in {D3, C5} than in {D5}."
+        "text": "Exactly 1 Painter is a criminal."
       }
     },
     {
@@ -196,15 +201,15 @@
       "clue": {
         "clue_id": "clue_D2",
         "owner_cell": "D2",
-        "clue_type": "AT_LEAST",
+        "clue_type": "EXACTLY",
         "params": {
-          "k": 3,
+          "k": 2,
           "region": {
             "region_type": "COL",
-            "target": "D"
+            "target": "C"
           }
         },
-        "text": "At least 3 criminals in col D."
+        "text": "Column C has exactly 2 criminals."
       }
     },
     {
@@ -213,17 +218,20 @@
       "col": 5,
       "name": "Jonas",
       "profession": "Farmer",
-      "true_status": "INNOCENT",
+      "true_status": "CRIMINAL",
       "initially_revealed": false,
       "clue": {
         "clue_id": "clue_E2",
         "owner_cell": "E2",
-        "clue_type": "SAME",
+        "clue_type": "AT_MOST",
         "params": {
-          "target1": "B3",
-          "target2": "C3"
+          "k": 2,
+          "region": {
+            "region_type": "ROW",
+            "target": 5
+          }
         },
-        "text": "B3 and C3 have the same status."
+        "text": "Row 5 has at most 2 criminals."
       }
     },
     {
@@ -232,20 +240,20 @@
       "col": 1,
       "name": "Karl",
       "profession": "Painter",
-      "true_status": "CRIMINAL",
+      "true_status": "INNOCENT",
       "initially_revealed": false,
       "clue": {
         "clue_id": "clue_A3",
         "owner_cell": "A3",
         "clue_type": "EXACTLY",
         "params": {
-          "k": 1,
+          "k": 2,
           "region": {
-            "region_type": "NEIGHBORS",
-            "target": "E5"
+            "region_type": "COL",
+            "target": "D"
           }
         },
-        "text": "Exactly 1 criminals in neighbors of E5."
+        "text": "Column D has exactly 2 criminals."
       }
     },
     {
@@ -254,20 +262,23 @@
       "col": 2,
       "name": "Leo",
       "profession": "Farmer",
-      "true_status": "CRIMINAL",
+      "true_status": "INNOCENT",
       "initially_revealed": false,
       "clue": {
         "clue_id": "clue_B3",
         "owner_cell": "B3",
-        "clue_type": "PARITY",
+        "clue_type": "EXACTLY",
         "params": {
-          "parity": "EVEN",
+          "k": 1,
           "region": {
-            "region_type": "NEIGHBORS",
-            "target": "B3"
+            "region_type": "CELLS",
+            "target": [
+              "A1",
+              "C3"
+            ]
           }
         },
-        "text": "Criminal count in neighbors of B3 is even."
+        "text": "Exactly 1 Astronaut is a criminal."
       }
     },
     {
@@ -276,23 +287,30 @@
       "col": 3,
       "name": "Mara",
       "profession": "Astronaut",
-      "true_status": "CRIMINAL",
-      "initially_revealed": false,
+      "true_status": "INNOCENT",
+      "initially_revealed": true,
       "clue": {
         "clue_id": "clue_C3",
         "owner_cell": "C3",
-        "clue_type": "EXACTLY",
+        "clue_type": "COMPARE_REGIONS",
         "params": {
-          "k": 2,
-          "region": {
+          "op": ">",
+          "region1": {
             "region_type": "CELLS",
             "target": [
-              "C3",
-              "E1"
+              "A3",
+              "D4"
+            ]
+          },
+          "region2": {
+            "region_type": "CELLS",
+            "target": [
+              "E4",
+              "D5"
             ]
           }
         },
-        "text": "Exactly 2 criminals in {C3, E1}."
+        "text": "More Painters than Pilots are criminals."
       }
     },
     {
@@ -301,17 +319,20 @@
       "col": 4,
       "name": "Noah",
       "profession": "Clerk",
-      "true_status": "CRIMINAL",
+      "true_status": "INNOCENT",
       "initially_revealed": false,
       "clue": {
         "clue_id": "clue_D3",
         "owner_cell": "D3",
-        "clue_type": "DIFFERENT",
+        "clue_type": "AT_LEAST",
         "params": {
-          "target1": "C2",
-          "target2": "B2"
+          "k": 3,
+          "region": {
+            "region_type": "CORNERS",
+            "target": null
+          }
         },
-        "text": "C2 and B2 have different status."
+        "text": "At least 3 corners are criminals."
       }
     },
     {
@@ -320,17 +341,23 @@
       "col": 5,
       "name": "Owen",
       "profession": "Clerk",
-      "true_status": "CRIMINAL",
+      "true_status": "INNOCENT",
       "initially_revealed": false,
       "clue": {
         "clue_id": "clue_E3",
         "owner_cell": "E3",
-        "clue_type": "SAME",
+        "clue_type": "PARITY",
         "params": {
-          "target1": "C4",
-          "target2": "B1"
+          "parity": "ODD",
+          "region": {
+            "region_type": "COMMON_NEIGHBORS",
+            "target": [
+              "B1",
+              "D1"
+            ]
+          }
         },
-        "text": "C4 and B1 have the same status."
+        "text": "B1 and D1 share an odd number of criminal neighbors."
       }
     },
     {
@@ -339,20 +366,20 @@
       "col": 1,
       "name": "Priya",
       "profession": "Farmer",
-      "true_status": "CRIMINAL",
+      "true_status": "INNOCENT",
       "initially_revealed": false,
       "clue": {
         "clue_id": "clue_A4",
         "owner_cell": "A4",
-        "clue_type": "AT_LEAST",
+        "clue_type": "EXACTLY",
         "params": {
-          "k": 6,
+          "k": 0,
           "region": {
-            "region_type": "NEIGHBORS",
-            "target": "C3"
+            "region_type": "ROW",
+            "target": 3
           }
         },
-        "text": "At least 6 criminals in neighbors of C3."
+        "text": "Row 3 has no criminals."
       }
     },
     {
@@ -361,17 +388,17 @@
       "col": 2,
       "name": "Quilla",
       "profession": "Detective",
-      "true_status": "CRIMINAL",
+      "true_status": "INNOCENT",
       "initially_revealed": false,
       "clue": {
         "clue_id": "clue_B4",
         "owner_cell": "B4",
-        "clue_type": "SAME",
+        "clue_type": "DIFFERENT",
         "params": {
-          "target1": "B4",
-          "target2": "A3"
+          "target1": "C2",
+          "target2": "C3"
         },
-        "text": "B4 and A3 have the same status."
+        "text": "Hannah (C2) and Mara (C3) have opposite statuses."
       }
     },
     {
@@ -380,23 +407,24 @@
       "col": 3,
       "name": "Roy",
       "profession": "Guard",
-      "true_status": "CRIMINAL",
+      "true_status": "INNOCENT",
       "initially_revealed": false,
       "clue": {
         "clue_id": "clue_C4",
         "owner_cell": "C4",
-        "clue_type": "EXACTLY",
+        "clue_type": "COMPARE_REGIONS",
         "params": {
-          "k": 1,
-          "region": {
-            "region_type": "CELLS",
-            "target": [
-              "C4",
-              "E2"
-            ]
+          "op": "==",
+          "region1": {
+            "region_type": "NEIGHBORS",
+            "target": "A1"
+          },
+          "region2": {
+            "region_type": "NEIGHBORS",
+            "target": "E1"
           }
         },
-        "text": "Exactly 1 criminals in {C4, E2}."
+        "text": "A1's neighbors and E1's neighbors have equally many criminals."
       }
     },
     {
@@ -412,10 +440,10 @@
         "owner_cell": "D4",
         "clue_type": "SAME",
         "params": {
-          "target1": "D4",
-          "target2": "C4"
+          "target1": "C5",
+          "target2": "E5"
         },
-        "text": "D4 and C4 have the same status."
+        "text": "Wendy (C5) and Yara (E5) share the same status."
       }
     },
     {
@@ -431,18 +459,16 @@
         "owner_cell": "E4",
         "clue_type": "PARITY",
         "params": {
-          "parity": "ODD",
+          "parity": "EVEN",
           "region": {
-            "region_type": "CELLS",
+            "region_type": "COMMON_NEIGHBORS",
             "target": [
-              "B2",
-              "B5",
-              "C2",
-              "D2"
+              "A1",
+              "C1"
             ]
           }
         },
-        "text": "Criminal count in {B2, B5, C2, D2} is odd."
+        "text": "A1 and C1 share an even number of criminal neighbors."
       }
     },
     {
@@ -456,15 +482,15 @@
       "clue": {
         "clue_id": "clue_A5",
         "owner_cell": "A5",
-        "clue_type": "PARITY",
+        "clue_type": "EXACTLY",
         "params": {
-          "parity": "ODD",
+          "k": 2,
           "region": {
-            "region_type": "CORNERS",
-            "target": null
+            "region_type": "COL",
+            "target": "B"
           }
         },
-        "text": "Criminal count in corners is odd."
+        "text": "Column B has exactly 2 criminals."
       }
     },
     {
@@ -478,20 +504,18 @@
       "clue": {
         "clue_id": "clue_B5",
         "owner_cell": "B5",
-        "clue_type": "AT_MOST",
+        "clue_type": "EXACTLY",
         "params": {
-          "k": 3,
+          "k": 0,
           "region": {
-            "region_type": "CELLS",
+            "region_type": "COMMON_NEIGHBORS",
             "target": [
-              "B4",
-              "C2",
-              "D3",
-              "E4"
+              "B3",
+              "B5"
             ]
           }
         },
-        "text": "At most 3 criminals in {B4, C2, D3, E4}."
+        "text": "B3 and B5 share no criminal neighbors."
       }
     },
     {
@@ -505,18 +529,18 @@
       "clue": {
         "clue_id": "clue_C5",
         "owner_cell": "C5",
-        "clue_type": "PARITY",
+        "clue_type": "EXACTLY",
         "params": {
-          "parity": "ODD",
+          "k": 1,
           "region": {
-            "region_type": "CELLS",
+            "region_type": "COMMON_NEIGHBORS",
             "target": [
-              "B5",
-              "C5"
+              "C3",
+              "D5"
             ]
           }
         },
-        "text": "Criminal count in {B5, C5} is odd."
+        "text": "C3 and D5 share exactly 1 criminal neighbor."
       }
     },
     {
@@ -526,22 +550,23 @@
       "name": "Xavier",
       "profession": "Pilot",
       "true_status": "INNOCENT",
-      "initially_revealed": true,
+      "initially_revealed": false,
       "clue": {
         "clue_id": "clue_D5",
         "owner_cell": "D5",
-        "clue_type": "PARITY",
+        "clue_type": "COMPARE_REGIONS",
         "params": {
-          "parity": "EVEN",
-          "region": {
-            "region_type": "CELLS",
-            "target": [
-              "D3",
-              "C5"
-            ]
+          "op": ">",
+          "region1": {
+            "region_type": "NEIGHBORS",
+            "target": "A1"
+          },
+          "region2": {
+            "region_type": "NEIGHBORS",
+            "target": "E5"
           }
         },
-        "text": "An even number in {D3, C5} are criminals."
+        "text": "A1's neighbors have more criminals than E5's neighbors."
       }
     },
     {
@@ -555,20 +580,15 @@
       "clue": {
         "clue_id": "clue_E5",
         "owner_cell": "E5",
-        "clue_type": "AT_MOST",
+        "clue_type": "EXACTLY",
         "params": {
-          "k": 2,
+          "k": 4,
           "region": {
-            "region_type": "CELLS",
-            "target": [
-              "A2",
-              "C1",
-              "C2",
-              "E3"
-            ]
+            "region_type": "ROW",
+            "target": 1
           }
         },
-        "text": "At most 2 criminals in {A2, C1, C2, E3}."
+        "text": "Row 1 has exactly 4 criminals."
       }
     }
   ]
